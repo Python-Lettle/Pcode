@@ -18,6 +18,7 @@ pc_code * lex(const char * code)
     pc_code *result = pc;
     while (ch[j])
     {
+        // ; 注释
         if (flag){
             if(ch[j]=='\n')
                 flag = 0;
@@ -30,8 +31,21 @@ pc_code * lex(const char * code)
             continue;
         }
 
+        // token 链表获取
         if (ch[j] != '\n' && ch[j] != ' ') {
             token[i++] = ch[j];
+        } else if (ch[j] == '\n') {
+            pc->code = (char *) malloc (strlen(token));
+            strcpy(pc->code, token);
+            memset(token, '\0', sizeof (token));
+            i = 0;
+            pc->next = (pc_code *) malloc (sizeof(pc_code));
+            pc = pc->next;
+
+            pc->code = (char *) malloc (strlen(token));
+            strcpy(pc->code, "\n");
+            pc->next = (pc_code *) malloc (sizeof(pc_code));
+            pc = pc->next;
         } else {
             pc->code = (char *) malloc (strlen(token));
             strcpy(pc->code, token);
@@ -40,6 +54,7 @@ pc_code * lex(const char * code)
             pc->next = (pc_code *) malloc (sizeof(pc_code));
             pc = pc->next;
         }
+
         j++;
     }pc->code = (char *) malloc (strlen(token));strcpy(pc->code, token);
 

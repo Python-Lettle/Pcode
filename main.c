@@ -6,6 +6,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "pcode.h"
 #include "pc_screen.h"
 #include "pc_lexer.h"
@@ -24,5 +25,6 @@ int main()
     pcode->code = pcCode;
 
     show(pcode);
+
     return 0;
 }

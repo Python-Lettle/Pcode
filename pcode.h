@@ -22,7 +22,9 @@ typedef struct pcode_tag
     pc_var * var_table;             // 变量表
     pc_func_table * func_table;     // 函数表
     pc_lable_table * lable_table;   // 标签表
-
 } Pcode;
+
+char * getStatement(pc_code *code);
+
 
 #endif //PCODE_PCODE_H
