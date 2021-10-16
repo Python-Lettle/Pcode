@@ -12,7 +12,7 @@
 int main()
 {
     // Pcode init
-    char * codes = "push a\nexit 0";
+    char * codes = ";hahaha\npush a\nexit 0";
     pc_code *pcCode = lex(codes);
     pc_stack *pcStack = (pc_stack *) malloc (sizeof(pc_stack));
     pc_var *pcVar;

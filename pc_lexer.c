@@ -9,6 +9,7 @@
 #include <string.h>
 pc_code * lex(const char * code)
 {
+    char flag = 0;
     short i=0, j=0;
     char token[MAX_TOKEN_LEN];
     char ch[strlen(code)];
@@ -17,11 +18,21 @@ pc_code * lex(const char * code)
     pc_code *result = pc;
     while (ch[j])
     {
-        if (ch[j] != '\n' && ch[j] != ' ') {
-            token[i++] = ch[j];
+        if (flag){
+            if(ch[j]=='\n')
+                flag = 0;
+            j++;
+            continue;
         }
 
-        else {
+        if (ch[j] == ';'){
+            flag = 1; j++;
+            continue;
+        }
+
+        if (ch[j] != '\n' && ch[j] != ' ') {
+            token[i++] = ch[j];
+        } else {
             pc->code = (char *) malloc (strlen(token));
             strcpy(pc->code, token);
             memset(token, '\0', sizeof (token));
