@@ -13,4 +13,6 @@ typedef struct pc_code_tag
     struct pc_code_tag *next;
 } pc_code;
 
+pc_code *pcCode;
+
 #endif //PCODE_PC_CODE_H

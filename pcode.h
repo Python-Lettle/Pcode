@@ -17,12 +17,14 @@
 typedef struct pcode_tag
 {
     pc_code * code;                 // 代码区
+    unsigned short code_line;        // 代码行数
     int eip;                        // 指令指针
     pc_stack * stack;               // 栈
     pc_var * var_table;             // 变量表
     pc_func_table * func_table;     // 函数表
     pc_lable_table * lable_table;   // 标签表
 } Pcode;
+Pcode * pcode;
 
 char * getStatement(pc_code *code);
 

@@ -8,8 +8,12 @@
 #define PCODE_PC_LEXER_H
 
 #include "pc_code.h"
+#include "pcode.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAX_TOKEN_LEN 10
-pc_code * lex(const char * code);
+pc_code * lex(FILE * fpin);
 
 #endif //PCODE_PC_LEXER_H

@@ -7,11 +7,31 @@
 #ifndef PCODE_PC_VAR_H
 #define PCODE_PC_VAR_H
 
-#define pc_value int
+// value 的类型
+enum
+{
+    PC_NONE,
+    PC_INT,
+    PC_FLOAT,
+    PC_STRING
+};
+
+typedef struct pc_value_tag
+{
+    union {
+        int int_value;
+        char *string_value;
+        float float_value;
+    };
+    unsigned char type;
+} pc_value;
 
 typedef struct
 {
-    pc_value * value;
+    unsigned short * var_position;
+    unsigned char  * var_name[21];
 } pc_var;
+
+pc_var *pcVar;
 
 #endif //PCODE_PC_VAR_H

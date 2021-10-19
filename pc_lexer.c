@@ -5,36 +5,35 @@
  * gitee : https://gitee.com/lettle/
  */
 #include "pc_lexer.h"
-#include <stdlib.h>
-#include <string.h>
-pc_code * lex(const char * code)
+
+pc_code * lex(FILE * fpin)
 {
     char flag = 0;
-    short i=0, j=0;
+    short i=0;
     char token[MAX_TOKEN_LEN];
-    char ch[strlen(code)];
-    strcpy(ch, code);
+    char ch = fgetc(fpin);
     pc_code *pc = (pc_code *) malloc (sizeof(pc_code));
     pc_code *result = pc;
-    while (ch[j])
+    while (ch != EOF)
     {
         // ; 注释
         if (flag){
-            if(ch[j]=='\n')
+            if(ch=='\n' || ch=='\r')
                 flag = 0;
-            j++;
+            ch = fgetc(fpin);
             continue;
         }
 
-        if (ch[j] == ';'){
-            flag = 1; j++;
+        if (ch == ';'){
+            flag = 1;
+            ch = fgetc(fpin);
             continue;
         }
 
         // token 链表获取
-        if (ch[j] != '\n' && ch[j] != ' ') {
-            token[i++] = ch[j];
-        } else if (ch[j] == '\n') {
+        if (ch != '\n' && ch != '\r' && ch != ' ') {
+            token[i++] = ch;
+        } else if (ch == '\r' || ch == '\n' && *token) {
             pc->code = (char *) malloc (strlen(token));
             strcpy(pc->code, token);
             memset(token, '\0', sizeof (token));
@@ -46,7 +45,8 @@ pc_code * lex(const char * code)
             strcpy(pc->code, "\n");
             pc->next = (pc_code *) malloc (sizeof(pc_code));
             pc = pc->next;
-        } else {
+            pcode->code_line++;
+        } else if(ch != '\n'){
             pc->code = (char *) malloc (strlen(token));
             strcpy(pc->code, token);
             memset(token, '\0', sizeof (token));
@@ -55,8 +55,8 @@ pc_code * lex(const char * code)
             pc = pc->next;
         }
 
-        j++;
-    }pc->code = (char *) malloc (strlen(token));strcpy(pc->code, token);
+        ch = fgetc(fpin);
+    }pc->code = (char *) malloc (strlen(token));strcpy(pc->code, token); pcode->code_line++;
 
     return result;
 }
